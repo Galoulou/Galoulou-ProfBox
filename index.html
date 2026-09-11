@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+
+```
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Galoulou ProfBox — Teacher Tools</title>
+
+<meta
+    name="description"
+    content="Galoulou ProfBox — Une boîte à outils complète pour les enseignants."
+>
+
+<meta
+    name="theme-color"
+    content="#0b0d12"
+>
+
+<link rel="stylesheet" href="style.css">
+
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+>
+```
+
+</head>
+
+<body>
+
+<!-- ==================================================
+     NAVBAR
+================================================== -->
+
+<header class="navbar">
+
+```
+<a href="index.html" class="logo">
+
+    <div class="logo-icon">
+        <i class="fa-solid fa-graduation-cap"></i>
+    </div>
+
+    <div class="logo-text">
+        <span>Galoulou</span>
+        <strong>ProfBox</strong>
+    </div>
+
+</a>
+
+
+<nav class="nav-links">
+
+    <a href="#home">
+        Accueil
+    </a>
+
+    <a href="#tools">
+        Outils
+    </a>
+
+    <a href="#categories">
+        Catégories
+    </a>
+
+    <a href="#about">
+        À propos
+    </a>
+
+</nav>
+
+
+<div class="navbar-actions">
+
+    <a
+        href="#tools"
+        class="prof-button"
+    >
+        <i class="fa-solid fa-wand-magic-sparkles"></i>
+        Mes outils
+    </a>
+
+    <button
+        id="themeToggle"
+        class="theme-toggle"
+        aria-label="Changer le thème"
+    >
+
+        <i class="fa-solid fa-moon"></i>
+
+    </button>
+
+    <button
+        id="mobileMenuToggle"
+        class="mobile-menu-toggle"
+        aria-label="Ouvrir le menu"
+    >
+
+        <i class="fa-solid fa-bars"></i>
+
+    </button>
+
+</div>
+```
+
+</header>
+
+<!-- ==================================================
+     MOBILE MENU
+================================================== -->
+
+<div
+    id="mobileMenu"
+    class="mobile-menu"
+>
+
+```
+<a href="#home">
+    <i class="fa-solid fa-house"></i>
+    Accueil
+</a>
+
+<a href="#tools">
+    <i class="fa-solid fa-toolbox"></i>
+    Outils
+</a>
+
+<a href="#categories">
+    <i class="fa-solid fa-layer-group"></i>
+    Catégories
+</a>
+
+<a href="#about">
+    <i class="fa-solid fa-circle-info"></i>
+    À propos
+</a>
+```
+
+</div>
+
+<!-- ==================================================
+     MAIN
+================================================== -->
+
+<main id="home">
+
+<!-- ==================================================
+     HERO
+================================================== -->
+
+<section class="hero">
+
+```
+<div class="hero-content">
+
+    <div class="hero-badge">
+
+        <i class="fa-solid fa-graduation-cap"></i>
+
+        La boîte à outils des enseignants
+
+    </div>
+
+
+    <h1>
+
+        Tout pour vos cours.
+
+        <br>
+
+        <span>Un seul endroit.</span>
+
+    </h1>
+
+
+    <p>
+
+        Galoulou ProfBox rassemble des outils simples,
+        rapides et gratuits pour vous aider à préparer
+        vos cours, organiser votre classe et gagner du temps.
+
+    </p>
+
+
+    <div class="hero-buttons">
+
+        <a
+            href="#tools"
+            class="primary-button"
+        >
+
+            Explorer les outils
+
+            <i class="fa-solid fa-arrow-down"></i>
+
+        </a>
+
+
+        <a
+            href="#categories"
+            class="secondary-button"
+        >
+
+            <i class="fa-solid fa-layer-group"></i>
+
+            Voir les catégories
+
+        </a>
+
+    </div>
+
+</div>
+
+
+<div class="hero-visual">
+
+    <div class="floating-card card-1">
+
+        <i class="fa-solid fa-folder-open"></i>
+
+        <span>Fichiers</span>
+
+    </div>
+
+
+    <div class="floating-card card-2">
+
+        <i class="fa-solid fa-users"></i>
+
+        <span>Classe</span>
+
+    </div>
+
+
+    <div class="floating-card card-3">
+
+        <i class="fa-solid fa-pen-ruler"></i>
+
+        <span>Pédagogie</span>
+
+    </div>
+
+
+    <div class="profbox-icon">
+
+        <i class="fa-solid fa-graduation-cap"></i>
+
+    </div>
+
+</div>
+```
+
+</section>
+
+<!-- ==================================================
+     GLOBAL SEARCH
+================================================== -->
+
+<section class="search-section">
+
+```
+<div class="search-container">
+
+    <i class="fa-solid fa-magnifying-glass"></i>
+
+    <input
+        type="search"
+        id="searchInput"
+        placeholder="Rechercher un outil..."
+        autocomplete="off"
+        aria-label="Rechercher un outil"
+    >
+
+    <kbd>Ctrl</kbd>
+    <kbd>K</kbd>
+
+</div>
+
+
+<div class="search-hints">
+
+    <span>Essayez :</span>
+
+    <button data-search="fichier">
+        fichiers
+    </button>
+
+    <button data-search="moyenne">
+        moyenne
+    </button>
+
+    <button data-search="tirage">
+        tirage
+    </button>
+
+    <button data-search="chronomètre">
+        chronomètre
+    </button>
+
+    <button data-search="pdf">
+        PDF
+    </button>
+
+</div>
+```
+
+</section>
+
+<!-- ==================================================
+     QUICK TOOLS
+================================================== -->
+
+<section class="quick-section">
+
+```
+<div class="section-header compact">
+
+    <div>
+
+        <div class="section-badge">
+
+            <i class="fa-solid fa-bolt"></i>
+
+            Accès rapide
+
+        </div>
+
+        <h2>
+            Les indispensables.
+        </h2>
+
+    </div>
+
+</div>
+
+
+<div class="quick-grid">
+
+
+    <a
+        href="tools/file-search.html"
+        class="quick-card"
+    >
+
+        <div class="quick-icon">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+
+        <div>
+
+            <strong>
+                Rechercher un fichier
+            </strong>
+
+            <span>
+                Retrouvez vos documents rapidement.
+            </span>
+
+        </div>
+
+    </a>
+
+
+    <a
+        href="tools/average.html"
+        class="quick-card"
+    >
+
+        <div class="quick-icon">
+            <i class="fa-solid fa-calculator"></i>
+        </div>
+
+        <div>
+
+            <strong>
+                Moyenne
+            </strong>
+
+            <span>
+                Calculez les moyennes de votre classe.
+            </span>
+
+        </div>
+
+    </a>
+
+
+    <a
+        href="tools/random-student.html"
+        class="quick-card"
+    >
+
+        <div class="quick-icon">
+            <i class="fa-solid fa-dice"></i>
+        </div>
+
+        <div>
+
+            <strong>
+                Tirage au sort
+            </strong>
+
+            <span>
+                Choisissez un élève aléatoirement.
+            </span>
+
+        </div>
+
+    </a>
+
+
+    <a
+        href="tools/timer.html"
+        class="quick-card"
+    >
+
+        <div class="quick-icon">
+            <i class="fa-solid fa-stopwatch"></i>
+        </div>
+
+        <div>
+
+            <strong>
+                Chronomètre
+            </strong>
+
+            <span>
+                Lancez un minuteur pour vos activités.
+            </span>
+
+        </div>
+
+    </a>
+
+
+</div>
+```
+
+</section>
+
+<!-- ==================================================
+     TOOLS
+================================================== -->
+
+<section
+    id="tools"
+    class="tools-section"
+>
+
+```
+<div class="section-header">
+
+    <div>
+
+        <div class="section-badge">
+
+            <i class="fa-solid fa-toolbox"></i>
+
+            ProfBox
+
+        </div>
+
+
+        <h2>
+            Tous vos outils.
+        </h2>
+
+
+        <p>
+            Des outils pensés pour vous faire gagner du temps.
+        </p>
+
+    </div>
+
+
+    <div class="tools-count">
+
+        <strong id="toolsCount">
+            8
+        </strong>
+
+        <span>
+            outils
+        </span>
+
+    </div>
+
+</div>
+
+
+<!-- CATEGORIES -->
+
+<div
+    id="categories"
+    class="categories"
+></div>
+
+
+<!-- RECENT -->
+
+<section
+    id="recentSection"
+    class="recent-section hidden"
+>
+
+    <div class="subsection-title">
+
+        <i class="fa-solid fa-clock-rotate-left"></i>
+
+        Récemment utilisés
+
+    </div>
+
+
+    <div
+        id="recentGrid"
+        class="recent-grid"
+    ></div>
+
+</section>
+
+
+<!-- TOOLS GRID -->
+
+<div
+    id="toolsGrid"
+    class="tools-grid"
+></div>
+
+
+<!-- NO RESULTS -->
+
+<div
+    id="noResults"
+    class="no-results hidden"
+>
+
+    <div class="no-results-icon">
+
+        <i class="fa-solid fa-face-frown"></i>
+
+    </div>
+
+    <h3>
+        Aucun outil trouvé
+    </h3>
+
+    <p>
+        Essayez un autre mot-clé ou une autre catégorie.
+    </p>
+
+    <button
+        id="clearSearch"
+        class="secondary-button"
+    >
+
+        Effacer la recherche
+
+    </button>
+
+</div>
+```
+
+</section>
+
+<!-- ==================================================
+     CATEGORIES SHOWCASE
+================================================== -->
+
+<section
+    id="categoriesShowcase"
+    class="category-showcase-section"
+>
+
+```
+<div class="section-header">
+
+    <div>
+
+        <div class="section-badge">
+
+            <i class="fa-solid fa-layer-group"></i>
+
+            Catégories
+
+        </div>
+
+
+        <h2>
+            Une place pour chaque besoin.
+        </h2>
+
+
+        <p>
+            Retrouvez rapidement l'outil adapté à votre situation.
+        </p>
+
+    </div>
+
+</div>
+
+
+<div class="category-showcase-grid">
+
+
+    <a
+        href="#tools"
+        class="category-showcase-card"
+        data-category-link="Fichiers"
+    >
+
+        <div class="category-showcase-icon">
+
+            <i class="fa-solid fa-folder-open"></i>
+
+        </div>
+
+        <div>
+
+            <h3>
+                Fichiers
+            </h3>
+
+            <p>
+                Retrouvez, organisez et préparez vos documents.
+            </p>
+
+        </div>
+
+        <i class="fa-solid fa-arrow-right"></i>
+
+    </a>
+
+
+    <a
+        href="#tools"
+        class="category-showcase-card"
+        data-category-link="Pédagogie"
+    >
+
+        <div class="category-showcase-icon">
+
+            <i class="fa-solid fa-pen-ruler"></i>
+
+        </div>
+
+        <div>
+
+            <h3>
+                Pédagogie
+            </h3>
+
+            <p>
+                Créez des exercices, fiches et activités.
+            </p>
+
+        </div>
+
+        <i class="fa-solid fa-arrow-right"></i>
+
+    </a>
+
+
+    <a
+        href="#tools"
+        class="category-showcase-card"
+        data-category-link="Classe"
+    >
+
+        <div class="category-showcase-icon">
+
+            <i class="fa-solid fa-users"></i>
+
+        </div>
+
+        <div>
+
+            <h3>
+                Classe
+            </h3>
+
+            <p>
+                Gérez les élèves, groupes, notes et tirages.
+            </p>
+
+        </div>
+
+        <i class="fa-solid fa-arrow-right"></i>
+
+    </a>
+
+
+    <a
+        href="#tools"
+        class="category-showcase-card"
+        data-category-link="Organisation"
+    >
+
+        <div class="category-showcase-icon">
+
+            <i class="fa-solid fa-calendar-days"></i>
+
+        </div>
+
+        <div>
+
+            <h3>
+                Organisation
+            </h3>
+
+            <p>
+                Planifiez vos journées et vos cours.
+            </p>
+
+        </div>
+
+        <i class="fa-solid fa-arrow-right"></i>
+
+    </a>
+
+
+    <a
+        href="#tools"
+        class="category-showcase-card"
+        data-category-link="Création"
+    >
+
+        <div class="category-showcase-icon">
+
+            <i class="fa-solid fa-palette"></i>
+
+        </div>
+
+        <div>
+
+            <h3>
+                Création
+            </h3>
+
+            <p>
+                Créez des supports prêts à imprimer.
+            </p>
+
+        </div>
+
+        <i class="fa-solid fa-arrow-right"></i>
+
+    </a>
+
+
+    <a
+        href="#tools"
+        class="category-showcase-card"
+        data-category-link="PDF"
+    >
+
+        <div class="category-showcase-icon">
+
+            <i class="fa-solid fa-file-pdf"></i>
+
+        </div>
+
+        <div>
+
+            <h3>
+                PDF & Documents
+            </h3>
+
+            <p>
+                Manipulez vos documents facilement.
+            </p>
+
+        </div>
+
+        <i class="fa-solid fa-arrow-right"></i>
+
+    </a>
+
+
+</div>
+```
+
+</section>
+
+<!-- ==================================================
+     FEATURED / PRIVACY
+================================================== -->
+
+<section class="feature-section">
+
+```
+<div class="feature-card">
+
+    <div class="feature-icon">
+
+        <i class="fa-solid fa-shield-halved"></i>
+
+    </div>
+
+
+    <div class="feature-content">
+
+        <div class="section-badge">
+            <i class="fa-solid fa-lock"></i>
+            Pensé pour vos documents
+        </div>
+
+
+        <h2>
+            Vos outils, votre navigateur.
+        </h2>
+
+
+        <p>
+            Quand cela est possible, ProfBox effectue les
+            opérations directement dans votre navigateur.
+            L'objectif : vous aider sans compliquer votre travail.
+        </p>
+
+    </div>
+
+</div>
+```
+
+</section>
+
+<!-- ==================================================
+     ABOUT
+================================================== -->
+
+<section
+    id="about"
+    class="about-section"
+>
+
+```
+<div class="section-badge">
+
+    <i class="fa-solid fa-circle-info"></i>
+
+    À propos
+
+</div>
+
+
+<h2>
+    Une toolbox pensée pour les profs.
+</h2>
+
+
+<p>
+    Galoulou ProfBox est un projet de Galoulou conçu pour
+    rassembler au même endroit les petits outils qui peuvent
+    faire gagner du temps aux enseignants au quotidien.
+</p>
+
+
+<div class="about-points">
+
+    <div>
+
+        <i class="fa-solid fa-bolt"></i>
+
+        <strong>
+            Rapide
+        </strong>
+
+        <span>
+            Ouvrez un outil et commencez immédiatement.
+        </span>
+
+    </div>
+
+
+    <div>
+
+        <i class="fa-solid fa-laptop"></i>
+
+        <strong>
+            Simple
+        </strong>
+
+        <span>
+            Une interface claire, sans installation compliquée.
+        </span>
+
+    </div>
+
+
+    <div>
+
+        <i class="fa-solid fa-heart"></i>
+
+        <strong>
+            Gratuit
+        </strong>
+
+        <span>
+            Des outils accessibles directement depuis le navigateur.
+        </span>
+
+    </div>
+
+</div>
+```
+
+</section>
+
+</main>
+
+<!-- ==================================================
+     FOOTER
+================================================== -->
+
+<footer class="footer">
+
+```
+<div class="footer-content">
+
+    <a
+        href="index.html"
+        class="logo"
+    >
+
+        <div class="logo-icon">
+            <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+
+        <div class="logo-text">
+            <span>Galoulou</span>
+            <strong>ProfBox</strong>
+        </div>
+
+    </a>
+
+
+    <p>
+        Des outils simples pour des journées plus simples.
+    </p>
+
+
+    <div class="footer-links">
+
+        <a href="#home">
+            Accueil
+        </a>
+
+        <a href="#tools">
+            Outils
+        </a>
+
+        <a href="#categoriesShowcase">
+            Catégories
+        </a>
+
+        <a href="#about">
+            À propos
+        </a>
+
+    </div>
+
+</div>
+
+
+<div class="footer-bottom">
+
+    © 2026 Galoulou ProfBox. All rights reserved.
+
+</div>
+```
+
+</footer>
+
+<!-- ==================================================
+     JAVASCRIPT
+================================================== -->
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
