@@ -1,990 +1,2080 @@
 <!DOCTYPE html>
-
 <html lang="fr">
-
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-```
-<meta charset="UTF-8">
+    <title>Calculateur de moyennes — Galoulou ProfBox</title>
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+    <meta
+        name="description"
+        content="Calculateur de moyennes pour enseignants — Galoulou ProfBox"
+    >
 
-<title>Galoulou ProfBox — Teacher Tools</title>
+    <link rel="stylesheet" href="../style.css">
 
-<meta
-    name="description"
-    content="Galoulou ProfBox — Une boîte à outils complète pour les enseignants."
->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
 
-<meta
-    name="theme-color"
-    content="#0b0d12"
->
+    <style>
+        /* =========================================================
+           PAGE CALCULATEUR DE MOYENNES
+        ========================================================= */
 
-<link rel="stylesheet" href="style.css">
+        .tool-page {
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
 
-<link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
->
-```
+        .tool-page-header {
+            padding: 70px 0 35px;
+        }
 
+        .tool-page-header-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 28px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: var(--text);
+            transform: translateX(-3px);
+        }
+
+        .tool-page-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 13px;
+            border: 1px solid var(--border);
+            background: var(--card);
+            border-radius: 999px;
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+
+        .tool-page-title {
+            margin: 0;
+            font-size: clamp(34px, 5vw, 56px);
+            line-height: 1.05;
+            letter-spacing: -2px;
+            color: var(--text);
+        }
+
+        .tool-page-description {
+            max-width: 700px;
+            margin: 18px 0 0;
+            color: var(--text-secondary);
+            font-size: 17px;
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           TOOLBAR
+        ========================================================= */
+
+        .average-toolbar {
+            max-width: 1000px;
+            margin: 0 auto 22px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .toolbar-left,
+        .toolbar-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .average-button {
+            border: 1px solid var(--border);
+            background: var(--card);
+            color: var(--text);
+            border-radius: 12px;
+            padding: 11px 15px;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease,
+                border-color 0.2s ease;
+        }
+
+        .average-button:hover {
+            transform: translateY(-2px);
+            background: var(--card-hover);
+        }
+
+        .average-button.primary {
+            background: var(--text);
+            color: var(--bg);
+            border-color: var(--text);
+        }
+
+        .average-button.danger {
+            color: #ff6b6b;
+        }
+
+        /* =========================================================
+           CLASS CARD
+        ========================================================= */
+
+        .average-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .class-summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 22px;
+        }
+
+        .summary-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 20px;
+        }
+
+        .summary-label {
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .summary-value {
+            color: var(--text);
+            font-size: 30px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        /* =========================================================
+           STUDENTS
+        ========================================================= */
+
+        .students-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .student-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 20px;
+            transition:
+                border-color 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        .student-card:hover {
+            border-color: rgba(128, 128, 128, 0.35);
+        }
+
+        .student-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 18px;
+        }
+
+        .student-name-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+            flex: 1;
+        }
+
+        .student-number {
+            width: 38px;
+            height: 38px;
+            flex: 0 0 38px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .student-name {
+            width: 100%;
+            max-width: 400px;
+            border: 1px solid var(--border);
+            background: var(--bg-secondary);
+            color: var(--text);
+            border-radius: 11px;
+            padding: 11px 13px;
+            outline: none;
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 650;
+        }
+
+        .student-name:focus,
+        .grade-input:focus,
+        .coefficient-input:focus {
+            border-color: var(--text-secondary);
+        }
+
+        .student-average {
+            min-width: 100px;
+            text-align: right;
+        }
+
+        .student-average-label {
+            color: var(--text-secondary);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .student-average-value {
+            color: var(--text);
+            font-size: 24px;
+            font-weight: 850;
+        }
+
+        .delete-student {
+            width: 38px;
+            height: 38px;
+            border-radius: 11px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .delete-student:hover {
+            color: #ff6b6b;
+            border-color: rgba(255, 107, 107, 0.35);
+            background: rgba(255, 107, 107, 0.06);
+        }
+
+        /* =========================================================
+           GRADES
+        ========================================================= */
+
+        .grades-wrapper {
+            border-top: 1px solid var(--border);
+            padding-top: 16px;
+        }
+
+        .grades-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .grades-title span {
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 750;
+        }
+
+        .add-grade-button {
+            border: 0;
+            background: transparent;
+            color: var(--text);
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 750;
+            padding: 6px 0;
+        }
+
+        .add-grade-button:hover {
+            text-decoration: underline;
+        }
+
+        .grades-list {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+        }
+
+        .grade-row {
+            display: grid;
+            grid-template-columns: minmax(150px, 1fr) 130px 120px 40px;
+            gap: 9px;
+            align-items: center;
+        }
+
+        .grade-input,
+        .coefficient-input {
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid var(--border);
+            background: var(--bg-secondary);
+            color: var(--text);
+            border-radius: 10px;
+            padding: 10px 11px;
+            outline: none;
+            font-family: inherit;
+            font-size: 14px;
+        }
+
+        .grade-input::placeholder,
+        .coefficient-input::placeholder,
+        .student-name::placeholder {
+            color: var(--text-secondary);
+            opacity: 0.7;
+        }
+
+        .grade-delete {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .grade-delete:hover {
+            color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.06);
+        }
+
+        .grade-error {
+            grid-column: 1 / -1;
+            color: #ff6b6b;
+            font-size: 12px;
+            display: none;
+        }
+
+        .grade-error.visible {
+            display: block;
+        }
+
+        /* =========================================================
+           EMPTY STATE
+        ========================================================= */
+
+        .empty-state {
+            background: var(--card);
+            border: 1px dashed var(--border);
+            border-radius: 20px;
+            padding: 55px 25px;
+            text-align: center;
+        }
+
+        .empty-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 18px;
+            border-radius: 18px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 24px;
+        }
+
+        .empty-state h3 {
+            margin: 0 0 8px;
+            color: var(--text);
+            font-size: 19px;
+        }
+
+        .empty-state p {
+            max-width: 500px;
+            margin: 0 auto 20px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        /* =========================================================
+           HELP
+        ========================================================= */
+
+        .average-help {
+            max-width: 1000px;
+            margin: 22px auto 0;
+            padding: 18px 20px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            color: var(--text-secondary);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .average-help strong {
+            color: var(--text);
+        }
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+
+        @media (max-width: 750px) {
+            .tool-page-header {
+                padding-top: 45px;
+            }
+
+            .class-summary {
+                grid-template-columns: 1fr;
+            }
+
+            .grade-row {
+                grid-template-columns: 1fr 1fr 1fr 40px;
+            }
+
+            .student-header {
+                align-items: flex-start;
+            }
+
+            .student-average {
+                min-width: 80px;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .tool-page-title {
+                letter-spacing: -1px;
+            }
+
+            .tool-page-description {
+                font-size: 15px;
+            }
+
+            .average-toolbar {
+                align-items: stretch;
+            }
+
+            .toolbar-left,
+            .toolbar-right {
+                width: 100%;
+            }
+
+            .average-button {
+                flex: 1;
+            }
+
+            .student-header {
+                flex-wrap: wrap;
+            }
+
+            .student-name-wrapper {
+                width: calc(100% - 50px);
+            }
+
+            .student-name {
+                max-width: none;
+            }
+
+            .student-average {
+                margin-left: 50px;
+                text-align: left;
+            }
+
+            .grade-row {
+                grid-template-columns: 1fr 1fr 40px;
+            }
+
+            .grade-row .grade-value-wrapper {
+                grid-column: 1;
+            }
+
+            .grade-row .coefficient-wrapper {
+                grid-column: 2;
+            }
+        }
+
+        @media print {
+            .navbar,
+            .back-link,
+            .average-toolbar,
+            .average-help,
+            .delete-student,
+            .grade-delete,
+            .add-grade-button {
+                display: none !important;
+            }
+
+            .tool-page-header {
+                padding-top: 20px;
+            }
+
+            .student-card,
+            .summary-card {
+                break-inside: avoid;
+                border: 1px solid #ccc;
+                background: white;
+                color: black;
+            }
+
+            body {
+                background: white !important;
+            }
+
+            * {
+                color: black !important;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<!-- ==================================================
-     NAVBAR
-================================================== -->
-
-<header class="navbar">
-
-```
-<a href="index.html" class="logo">
-
-    <div class="logo-icon">
-        <i class="fa-solid fa-graduation-cap"></i>
-    </div>
-
-    <div class="logo-text">
-        <span>Galoulou</span>
-        <strong>ProfBox</strong>
-    </div>
-
-</a>
-
-
-<nav class="nav-links">
-
-    <a href="#home">
-        Accueil
-    </a>
-
-    <a href="#tools">
-        Outils
-    </a>
-
-    <a href="#categories">
-        Catégories
-    </a>
-
-    <a href="#about">
-        À propos
-    </a>
-
-</nav>
-
-
-<div class="navbar-actions">
-
-    <a
-        href="#tools"
-        class="prof-button"
-    >
-        <i class="fa-solid fa-wand-magic-sparkles"></i>
-        Mes outils
-    </a>
-
-    <button
-        id="themeToggle"
-        class="theme-toggle"
-        aria-label="Changer le thème"
-    >
-
-        <i class="fa-solid fa-moon"></i>
-
-    </button>
-
-    <button
-        id="mobileMenuToggle"
-        class="mobile-menu-toggle"
-        aria-label="Ouvrir le menu"
-    >
-
-        <i class="fa-solid fa-bars"></i>
-
-    </button>
-
-</div>
-```
-
-</header>
-
-<!-- ==================================================
-     MOBILE MENU
-================================================== -->
-
-<div
-    id="mobileMenu"
-    class="mobile-menu"
->
-
-```
-<a href="#home">
-    <i class="fa-solid fa-house"></i>
-    Accueil
-</a>
-
-<a href="#tools">
-    <i class="fa-solid fa-toolbox"></i>
-    Outils
-</a>
-
-<a href="#categories">
-    <i class="fa-solid fa-layer-group"></i>
-    Catégories
-</a>
-
-<a href="#about">
-    <i class="fa-solid fa-circle-info"></i>
-    À propos
-</a>
-```
-
-</div>
-
-<!-- ==================================================
-     MAIN
-================================================== -->
-
-<main id="home">
-
-<!-- ==================================================
-     HERO
-================================================== -->
-
-<section class="hero">
-
-```
-<div class="hero-content">
-
-    <div class="hero-badge">
-
-        <i class="fa-solid fa-graduation-cap"></i>
-
-        La boîte à outils des enseignants
-
-    </div>
-
-
-    <h1>
-
-        Tout pour vos cours.
-
-        <br>
-
-        <span>Un seul endroit.</span>
-
-    </h1>
-
-
-    <p>
-
-        Galoulou ProfBox rassemble des outils simples,
-        rapides et gratuits pour vous aider à préparer
-        vos cours, organiser votre classe et gagner du temps.
-
-    </p>
-
-
-    <div class="hero-buttons">
-
-        <a
-            href="#tools"
-            class="primary-button"
-        >
-
-            Explorer les outils
-
-            <i class="fa-solid fa-arrow-down"></i>
-
-        </a>
-
-
-        <a
-            href="#categories"
-            class="secondary-button"
-        >
-
-            <i class="fa-solid fa-layer-group"></i>
-
-            Voir les catégories
-
-        </a>
-
-    </div>
-
-</div>
-
-
-<div class="hero-visual">
-
-    <div class="floating-card card-1">
-
-        <i class="fa-solid fa-folder-open"></i>
-
-        <span>Fichiers</span>
-
-    </div>
-
-
-    <div class="floating-card card-2">
-
-        <i class="fa-solid fa-users"></i>
-
-        <span>Classe</span>
-
-    </div>
-
-
-    <div class="floating-card card-3">
-
-        <i class="fa-solid fa-pen-ruler"></i>
-
-        <span>Pédagogie</span>
-
-    </div>
-
-
-    <div class="profbox-icon">
-
-        <i class="fa-solid fa-graduation-cap"></i>
-
-    </div>
-
-</div>
-```
-
-</section>
-
-<!-- ==================================================
-     GLOBAL SEARCH
-================================================== -->
-
-<section class="search-section">
-
-```
-<div class="search-container">
-
-    <i class="fa-solid fa-magnifying-glass"></i>
-
-    <input
-        type="search"
-        id="searchInput"
-        placeholder="Rechercher un outil..."
-        autocomplete="off"
-        aria-label="Rechercher un outil"
-    >
-
-    <kbd>Ctrl</kbd>
-    <kbd>K</kbd>
-
-</div>
-
-
-<div class="search-hints">
-
-    <span>Essayez :</span>
-
-    <button data-search="fichier">
-        fichiers
-    </button>
-
-    <button data-search="moyenne">
-        moyenne
-    </button>
-
-    <button data-search="tirage">
-        tirage
-    </button>
-
-    <button data-search="chronomètre">
-        chronomètre
-    </button>
-
-    <button data-search="pdf">
-        PDF
-    </button>
-
-</div>
-```
-
-</section>
-
-<!-- ==================================================
-     QUICK TOOLS
-================================================== -->
-
-<section class="quick-section">
-
-```
-<div class="section-header compact">
-
-    <div>
-
-        <div class="section-badge">
-
-            <i class="fa-solid fa-bolt"></i>
-
-            Accès rapide
+    <div class="tool-page">
+
+        <!-- =====================================================
+             NAVBAR
+        ====================================================== -->
+
+        <nav class="navbar">
+            <div class="container navbar-inner">
+
+                <a href="../index.html" class="logo">
+                    <span class="logo-icon">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </span>
+
+                    <span>Galoulou ProfBox</span>
+                </a>
+
+                <div class="nav-links">
+                    <a href="../index.html">Accueil</a>
+                    <a href="../index.html#tools">Outils</a>
+                    <a href="../index.html#categories">Catégories</a>
+                    <a href="../index.html#about">À propos</a>
+                </div>
+
+                <div class="nav-actions">
+
+                    <a
+                        href="../index.html#tools"
+                        class="nav-button"
+                    >
+                        <i class="fa-solid fa-toolbox"></i>
+                        Mes outils
+                    </a>
+
+                    <button
+                        class="theme-toggle"
+                        id="themeToggle"
+                        type="button"
+                        aria-label="Changer de thème"
+                    >
+                        <i class="fa-solid fa-moon"></i>
+                    </button>
+
+                    <button
+                        class="mobile-menu-button"
+                        id="mobileMenuButton"
+                        type="button"
+                        aria-label="Ouvrir le menu"
+                    >
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+
+                </div>
+            </div>
+
+            <div
+                class="mobile-menu"
+                id="mobileMenu"
+            >
+                <a href="../index.html">Accueil</a>
+                <a href="../index.html#tools">Outils</a>
+                <a href="../index.html#categories">Catégories</a>
+                <a href="../index.html#about">À propos</a>
+            </div>
+        </nav>
+
+
+        <!-- =====================================================
+             HEADER
+        ====================================================== -->
+
+        <header class="tool-page-header">
+            <div class="container tool-page-header-inner">
+
+                <a
+                    href="../index.html#tools"
+                    class="back-link"
+                >
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Retour aux outils
+                </a>
+
+                <div class="tool-page-badge">
+                    <i class="fa-solid fa-calculator"></i>
+                    Pédagogie
+                </div>
+
+                <h1 class="tool-page-title">
+                    Calculateur de moyennes
+                </h1>
+
+                <p class="tool-page-description">
+                    Calculez rapidement les moyennes de vos élèves,
+                    avec notes et coefficients. Tout fonctionne directement
+                    dans votre navigateur.
+                </p>
+
+            </div>
+        </header>
+
+
+        <!-- =====================================================
+             TOOLBAR
+        ====================================================== -->
+
+        <main class="average-container">
+
+            <div class="average-toolbar">
+
+                <div class="toolbar-left">
+
+                    <button
+                        class="average-button primary"
+                        id="addStudentButton"
+                        type="button"
+                    >
+                        <i class="fa-solid fa-user-plus"></i>
+                        Ajouter un élève
+                    </button>
+
+                    <button
+                        class="average-button"
+                        id="addGradeToAllButton"
+                        type="button"
+                    >
+                        <i class="fa-solid fa-plus"></i>
+                        Ajouter une note à tous
+                    </button>
+
+                </div>
+
+                <div class="toolbar-right">
+
+                    <button
+                        class="average-button"
+                        id="printButton"
+                        type="button"
+                    >
+                        <i class="fa-solid fa-print"></i>
+                        Imprimer
+                    </button>
+
+                    <button
+                        class="average-button danger"
+                        id="resetButton"
+                        type="button"
+                    >
+                        <i class="fa-solid fa-rotate-left"></i>
+                        Réinitialiser
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 SUMMARY
+            ================================================== -->
+
+            <section class="class-summary">
+
+                <div class="summary-card">
+                    <div class="summary-label">
+                        Élèves
+                    </div>
+
+                    <div
+                        class="summary-value"
+                        id="studentCount"
+                    >
+                        0
+                    </div>
+                </div>
+
+                <div class="summary-card">
+                    <div class="summary-label">
+                        Notes saisies
+                    </div>
+
+                    <div
+                        class="summary-value"
+                        id="gradeCount"
+                    >
+                        0
+                    </div>
+                </div>
+
+                <div class="summary-card">
+                    <div class="summary-label">
+                        Moyenne de la classe
+                    </div>
+
+                    <div
+                        class="summary-value"
+                        id="classAverage"
+                    >
+                        —
+                    </div>
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 STUDENTS
+            ================================================== -->
+
+            <section
+                class="students-list"
+                id="studentsList"
+            >
+            </section>
+
+
+            <!-- =================================================
+                 EMPTY STATE
+            ================================================== -->
+
+            <section
+                class="empty-state"
+                id="emptyState"
+            >
+
+                <div class="empty-icon">
+                    <i class="fa-solid fa-calculator"></i>
+                </div>
+
+                <h3>
+                    Aucun élève pour le moment
+                </h3>
+
+                <p>
+                    Commencez par ajouter un élève, puis ajoutez ses notes
+                    et leurs coefficients.
+                </p>
+
+                <button
+                    class="average-button primary"
+                    id="emptyAddStudentButton"
+                    type="button"
+                >
+                    <i class="fa-solid fa-user-plus"></i>
+                    Ajouter mon premier élève
+                </button>
+
+            </section>
+
+        </main>
+
+
+        <!-- =====================================================
+             HELP
+        ====================================================== -->
+
+        <div class="container">
+
+            <div class="average-help">
+
+                <strong>
+                    💡 Astuce :
+                </strong>
+
+                Une note doit être comprise entre
+                <strong>0 et 20</strong>.
+                Si aucun coefficient n'est indiqué,
+                le coefficient <strong>1</strong> est utilisé.
+                Les données sont conservées uniquement dans votre navigateur.
+
+            </div>
 
         </div>
-
-        <h2>
-            Les indispensables.
-        </h2>
-
-    </div>
-
-</div>
-
-
-<div class="quick-grid">
-
-
-    <a
-        href="tools/file-search.html"
-        class="quick-card"
-    >
-
-        <div class="quick-icon">
-            <i class="fa-solid fa-magnifying-glass"></i>
-        </div>
-
-        <div>
-
-            <strong>
-                Rechercher un fichier
-            </strong>
-
-            <span>
-                Retrouvez vos documents rapidement.
-            </span>
-
-        </div>
-
-    </a>
-
-
-    <a
-        href="tools/average.html"
-        class="quick-card"
-    >
-
-        <div class="quick-icon">
-            <i class="fa-solid fa-calculator"></i>
-        </div>
-
-        <div>
-
-            <strong>
-                Moyenne
-            </strong>
-
-            <span>
-                Calculez les moyennes de votre classe.
-            </span>
-
-        </div>
-
-    </a>
-
-
-    <a
-        href="tools/random-student.html"
-        class="quick-card"
-    >
-
-        <div class="quick-icon">
-            <i class="fa-solid fa-dice"></i>
-        </div>
-
-        <div>
-
-            <strong>
-                Tirage au sort
-            </strong>
-
-            <span>
-                Choisissez un élève aléatoirement.
-            </span>
-
-        </div>
-
-    </a>
-
-
-    <a
-        href="tools/timer.html"
-        class="quick-card"
-    >
-
-        <div class="quick-icon">
-            <i class="fa-solid fa-stopwatch"></i>
-        </div>
-
-        <div>
-
-            <strong>
-                Chronomètre
-            </strong>
-
-            <span>
-                Lancez un minuteur pour vos activités.
-            </span>
-
-        </div>
-
-    </a>
-
-
-</div>
-```
-
-</section>
-
-<!-- ==================================================
-     TOOLS
-================================================== -->
-
-<section
-    id="tools"
-    class="tools-section"
->
-
-```
-<div class="section-header">
-
-    <div>
-
-        <div class="section-badge">
-
-            <i class="fa-solid fa-toolbox"></i>
-
-            ProfBox
-
-        </div>
-
-
-        <h2>
-            Tous vos outils.
-        </h2>
-
-
-        <p>
-            Des outils pensés pour vous faire gagner du temps.
-        </p>
 
     </div>
 
 
-    <div class="tools-count">
+    <!-- =========================================================
+         JAVASCRIPT
+    ========================================================== -->
 
-        <strong id="toolsCount">
-            8
-        </strong>
+    <script>
 
-        <span>
-            outils
-        </span>
+        /* =====================================================
+           ÉTAT
+        ====================================================== */
 
-    </div>
+        let students = [];
 
-</div>
+        const STORAGE_KEY = "profbox_average_students";
 
 
-<!-- CATEGORIES -->
+        /* =====================================================
+           DOM
+        ====================================================== */
 
-<div
-    id="categories"
-    class="categories"
-></div>
+        const studentsList =
+            document.getElementById("studentsList");
 
+        const emptyState =
+            document.getElementById("emptyState");
 
-<!-- RECENT -->
+        const studentCount =
+            document.getElementById("studentCount");
 
-<section
-    id="recentSection"
-    class="recent-section hidden"
->
+        const gradeCount =
+            document.getElementById("gradeCount");
 
-    <div class="subsection-title">
+        const classAverage =
+            document.getElementById("classAverage");
 
-        <i class="fa-solid fa-clock-rotate-left"></i>
+        const addStudentButton =
+            document.getElementById("addStudentButton");
 
-        Récemment utilisés
+        const emptyAddStudentButton =
+            document.getElementById("emptyAddStudentButton");
 
-    </div>
+        const addGradeToAllButton =
+            document.getElementById("addGradeToAllButton");
 
+        const printButton =
+            document.getElementById("printButton");
 
-    <div
-        id="recentGrid"
-        class="recent-grid"
-    ></div>
+        const resetButton =
+            document.getElementById("resetButton");
 
-</section>
 
+        /* =====================================================
+           UTILITAIRES
+        ====================================================== */
 
-<!-- TOOLS GRID -->
+        function createId() {
 
-<div
-    id="toolsGrid"
-    class="tools-grid"
-></div>
+            return Date.now().toString(36) +
+                Math.random().toString(36).substring(2);
 
+        }
 
-<!-- NO RESULTS -->
 
-<div
-    id="noResults"
-    class="no-results hidden"
->
+        function formatAverage(value) {
 
-    <div class="no-results-icon">
+            if (
+                value === null ||
+                value === undefined ||
+                Number.isNaN(value)
+            ) {
+                return "—";
+            }
 
-        <i class="fa-solid fa-face-frown"></i>
+            return value
+                .toFixed(2)
+                .replace(".", ",");
 
-    </div>
+        }
 
-    <h3>
-        Aucun outil trouvé
-    </h3>
 
-    <p>
-        Essayez un autre mot-clé ou une autre catégorie.
-    </p>
+        function saveData() {
 
-    <button
-        id="clearSearch"
-        class="secondary-button"
-    >
+            localStorage.setItem(
+                STORAGE_KEY,
+                JSON.stringify(students)
+            );
 
-        Effacer la recherche
+        }
 
-    </button>
 
-</div>
-```
+        function loadData() {
 
-</section>
+            try {
 
-<!-- ==================================================
-     CATEGORIES SHOWCASE
-================================================== -->
+                const saved =
+                    localStorage.getItem(STORAGE_KEY);
 
-<section
-    id="categoriesShowcase"
-    class="category-showcase-section"
->
+                if (!saved) {
+                    return;
+                }
 
-```
-<div class="section-header">
+                const parsed =
+                    JSON.parse(saved);
 
-    <div>
+                if (Array.isArray(parsed)) {
 
-        <div class="section-badge">
+                    students = parsed;
 
-            <i class="fa-solid fa-layer-group"></i>
+                }
 
-            Catégories
+            } catch (error) {
 
-        </div>
+                console.error(
+                    "Impossible de charger les données.",
+                    error
+                );
 
+            }
 
-        <h2>
-            Une place pour chaque besoin.
-        </h2>
+        }
 
 
-        <p>
-            Retrouvez rapidement l'outil adapté à votre situation.
-        </p>
+        /* =====================================================
+           CALCULS
+        ====================================================== */
 
-    </div>
+        function calculateStudentAverage(student) {
 
-</div>
+            const validGrades =
+                student.grades.filter(
+                    grade =>
+                        typeof grade.value === "number" &&
+                        !Number.isNaN(grade.value) &&
+                        grade.value >= 0 &&
+                        grade.value <= 20
+                );
 
+            if (validGrades.length === 0) {
+                return null;
+            }
 
-<div class="category-showcase-grid">
+            let total = 0;
+            let totalCoefficient = 0;
 
+            validGrades.forEach(grade => {
 
-    <a
-        href="#tools"
-        class="category-showcase-card"
-        data-category-link="Fichiers"
-    >
+                const coefficient =
+                    Number(grade.coefficient) > 0
+                        ? Number(grade.coefficient)
+                        : 1;
 
-        <div class="category-showcase-icon">
+                total +=
+                    grade.value * coefficient;
 
-            <i class="fa-solid fa-folder-open"></i>
+                totalCoefficient +=
+                    coefficient;
 
-        </div>
+            });
 
-        <div>
+            if (totalCoefficient === 0) {
+                return null;
+            }
 
-            <h3>
-                Fichiers
-            </h3>
+            return total / totalCoefficient;
 
-            <p>
-                Retrouvez, organisez et préparez vos documents.
-            </p>
+        }
 
-        </div>
 
-        <i class="fa-solid fa-arrow-right"></i>
+        function calculateClassAverage() {
 
-    </a>
+            const averages =
+                students
+                    .map(calculateStudentAverage)
+                    .filter(
+                        average =>
+                            average !== null &&
+                            !Number.isNaN(average)
+                    );
 
+            if (averages.length === 0) {
+                return null;
+            }
 
-    <a
-        href="#tools"
-        class="category-showcase-card"
-        data-category-link="Pédagogie"
-    >
+            const total =
+                averages.reduce(
+                    (sum, value) => sum + value,
+                    0
+                );
 
-        <div class="category-showcase-icon">
+            return total / averages.length;
 
-            <i class="fa-solid fa-pen-ruler"></i>
+        }
 
-        </div>
 
-        <div>
+        /* =====================================================
+           AJOUT ÉLÈVE
+        ====================================================== */
 
-            <h3>
-                Pédagogie
-            </h3>
+        function addStudent() {
 
-            <p>
-                Créez des exercices, fiches et activités.
-            </p>
+            const student = {
 
-        </div>
+                id: createId(),
 
-        <i class="fa-solid fa-arrow-right"></i>
+                name:
+                    `Élève ${students.length + 1}`,
 
-    </a>
+                grades: [
 
+                    {
+                        id: createId(),
+                        name: "Note 1",
+                        value: null,
+                        coefficient: 1
+                    }
 
-    <a
-        href="#tools"
-        class="category-showcase-card"
-        data-category-link="Classe"
-    >
+                ]
 
-        <div class="category-showcase-icon">
+            };
 
-            <i class="fa-solid fa-users"></i>
+            students.push(student);
 
-        </div>
+            saveData();
 
-        <div>
+            render();
 
-            <h3>
-                Classe
-            </h3>
+            setTimeout(() => {
 
-            <p>
-                Gérez les élèves, groupes, notes et tirages.
-            </p>
+                const input =
+                    document.querySelector(
+                        `[data-student-name="${student.id}"]`
+                    );
 
-        </div>
+                if (input) {
 
-        <i class="fa-solid fa-arrow-right"></i>
+                    input.focus();
 
-    </a>
+                    input.select();
 
+                }
 
-    <a
-        href="#tools"
-        class="category-showcase-card"
-        data-category-link="Organisation"
-    >
+            }, 50);
 
-        <div class="category-showcase-icon">
+        }
 
-            <i class="fa-solid fa-calendar-days"></i>
 
-        </div>
+        /* =====================================================
+           SUPPRESSION ÉLÈVE
+        ====================================================== */
 
-        <div>
+        function deleteStudent(studentId) {
 
-            <h3>
-                Organisation
-            </h3>
+            const student =
+                students.find(
+                    item => item.id === studentId
+                );
 
-            <p>
-                Planifiez vos journées et vos cours.
-            </p>
+            if (!student) {
+                return;
+            }
 
-        </div>
+            const confirmed =
+                confirm(
+                    `Supprimer ${student.name} ?`
+                );
 
-        <i class="fa-solid fa-arrow-right"></i>
+            if (!confirmed) {
+                return;
+            }
 
-    </a>
+            students =
+                students.filter(
+                    item => item.id !== studentId
+                );
 
+            saveData();
 
-    <a
-        href="#tools"
-        class="category-showcase-card"
-        data-category-link="Création"
-    >
+            render();
 
-        <div class="category-showcase-icon">
+        }
 
-            <i class="fa-solid fa-palette"></i>
 
-        </div>
+        /* =====================================================
+           AJOUT NOTE
+        ====================================================== */
 
-        <div>
+        function addGrade(studentId) {
 
-            <h3>
-                Création
-            </h3>
+            const student =
+                students.find(
+                    item => item.id === studentId
+                );
 
-            <p>
-                Créez des supports prêts à imprimer.
-            </p>
+            if (!student) {
+                return;
+            }
 
-        </div>
+            student.grades.push({
 
-        <i class="fa-solid fa-arrow-right"></i>
+                id: createId(),
 
-    </a>
+                name:
+                    `Note ${student.grades.length + 1}`,
 
+                value: null,
 
-    <a
-        href="#tools"
-        class="category-showcase-card"
-        data-category-link="PDF"
-    >
+                coefficient: 1
 
-        <div class="category-showcase-icon">
+            });
 
-            <i class="fa-solid fa-file-pdf"></i>
+            saveData();
 
-        </div>
+            render();
 
-        <div>
+        }
 
-            <h3>
-                PDF & Documents
-            </h3>
 
-            <p>
-                Manipulez vos documents facilement.
-            </p>
+        function addGradeToAll() {
 
-        </div>
+            if (students.length === 0) {
 
-        <i class="fa-solid fa-arrow-right"></i>
+                addStudent();
 
-    </a>
+                return;
 
+            }
 
-</div>
-```
+            students.forEach(student => {
 
-</section>
+                student.grades.push({
 
-<!-- ==================================================
-     FEATURED / PRIVACY
-================================================== -->
+                    id: createId(),
 
-<section class="feature-section">
+                    name:
+                        `Note ${student.grades.length + 1}`,
 
-```
-<div class="feature-card">
+                    value: null,
 
-    <div class="feature-icon">
+                    coefficient: 1
 
-        <i class="fa-solid fa-shield-halved"></i>
+                });
 
-    </div>
+            });
 
+            saveData();
 
-    <div class="feature-content">
+            render();
 
-        <div class="section-badge">
-            <i class="fa-solid fa-lock"></i>
-            Pensé pour vos documents
-        </div>
+        }
 
 
-        <h2>
-            Vos outils, votre navigateur.
-        </h2>
+        /* =====================================================
+           SUPPRESSION NOTE
+        ====================================================== */
 
+        function deleteGrade(
+            studentId,
+            gradeId
+        ) {
 
-        <p>
-            Quand cela est possible, ProfBox effectue les
-            opérations directement dans votre navigateur.
-            L'objectif : vous aider sans compliquer votre travail.
-        </p>
+            const student =
+                students.find(
+                    item => item.id === studentId
+                );
 
-    </div>
+            if (!student) {
+                return;
+            }
 
-</div>
-```
+            if (student.grades.length <= 1) {
 
-</section>
+                alert(
+                    "Un élève doit conserver au moins une ligne de note."
+                );
 
-<!-- ==================================================
-     ABOUT
-================================================== -->
+                return;
 
-<section
-    id="about"
-    class="about-section"
->
+            }
 
-```
-<div class="section-badge">
+            student.grades =
+                student.grades.filter(
+                    grade => grade.id !== gradeId
+                );
 
-    <i class="fa-solid fa-circle-info"></i>
+            saveData();
 
-    À propos
+            render();
 
-</div>
+        }
 
 
-<h2>
-    Une toolbox pensée pour les profs.
-</h2>
+        /* =====================================================
+           MISE À JOUR NOM
+        ====================================================== */
 
+        function updateStudentName(
+            studentId,
+            value
+        ) {
 
-<p>
-    Galoulou ProfBox est un projet de Galoulou conçu pour
-    rassembler au même endroit les petits outils qui peuvent
-    faire gagner du temps aux enseignants au quotidien.
-</p>
+            const student =
+                students.find(
+                    item => item.id === studentId
+                );
 
+            if (!student) {
+                return;
+            }
 
-<div class="about-points">
+            student.name =
+                value.trim() ||
+                "Élève sans nom";
 
-    <div>
+            saveData();
 
-        <i class="fa-solid fa-bolt"></i>
+        }
 
-        <strong>
-            Rapide
-        </strong>
 
-        <span>
-            Ouvrez un outil et commencez immédiatement.
-        </span>
+        /* =====================================================
+           MISE À JOUR NOTE
+        ====================================================== */
 
-    </div>
+        function updateGradeValue(
+            studentId,
+            gradeId,
+            value
+        ) {
 
+            const student =
+                students.find(
+                    item => item.id === studentId
+                );
 
-    <div>
+            if (!student) {
+                return;
+            }
 
-        <i class="fa-solid fa-laptop"></i>
+            const grade =
+                student.grades.find(
+                    item => item.id === gradeId
+                );
 
-        <strong>
-            Simple
-        </strong>
+            if (!grade) {
+                return;
+            }
 
-        <span>
-            Une interface claire, sans installation compliquée.
-        </span>
+            if (value === "") {
 
-    </div>
+                grade.value = null;
 
+            } else {
 
-    <div>
+                const number =
+                    Number(
+                        value.replace(",", ".")
+                    );
 
-        <i class="fa-solid fa-heart"></i>
+                grade.value =
+                    Number.isFinite(number)
+                        ? number
+                        : null;
 
-        <strong>
-            Gratuit
-        </strong>
+            }
 
-        <span>
-            Des outils accessibles directement depuis le navigateur.
-        </span>
+            saveData();
 
-    </div>
+            updateCalculatedValues();
 
-</div>
-```
+        }
 
-</section>
 
-</main>
+        /* =====================================================
+           MISE À JOUR COEFFICIENT
+        ====================================================== */
 
-<!-- ==================================================
-     FOOTER
-================================================== -->
+        function updateGradeCoefficient(
+            studentId,
+            gradeId,
+            value
+        ) {
 
-<footer class="footer">
+            const student =
+                students.find(
+                    item => item.id === studentId
+                );
 
-```
-<div class="footer-content">
+            if (!student) {
+                return;
+            }
 
-    <a
-        href="index.html"
-        class="logo"
-    >
+            const grade =
+                student.grades.find(
+                    item => item.id === gradeId
+                );
 
-        <div class="logo-icon">
-            <i class="fa-solid fa-graduation-cap"></i>
-        </div>
+            if (!grade) {
+                return;
+            }
 
-        <div class="logo-text">
-            <span>Galoulou</span>
-            <strong>ProfBox</strong>
-        </div>
+            const coefficient =
+                Number(
+                    value.replace(",", ".")
+                );
 
-    </a>
+            if (
+                Number.isFinite(coefficient) &&
+                coefficient > 0
+            ) {
 
+                grade.coefficient =
+                    coefficient;
 
-    <p>
-        Des outils simples pour des journées plus simples.
-    </p>
+            } else {
 
+                grade.coefficient = 1;
 
-    <div class="footer-links">
+            }
 
-        <a href="#home">
-            Accueil
-        </a>
+            saveData();
 
-        <a href="#tools">
-            Outils
-        </a>
+            updateCalculatedValues();
 
-        <a href="#categoriesShowcase">
-            Catégories
-        </a>
+        }
 
-        <a href="#about">
-            À propos
-        </a>
 
-    </div>
+        /* =====================================================
+           RENDU
+        ====================================================== */
 
-</div>
+        function render() {
 
+            studentsList.innerHTML = "";
 
-<div class="footer-bottom">
+            if (students.length === 0) {
 
-    © 2026 Galoulou ProfBox. All rights reserved.
+                emptyState.style.display =
+                    "block";
 
-</div>
-```
+            } else {
 
-</footer>
+                emptyState.style.display =
+                    "none";
 
-<!-- ==================================================
-     JAVASCRIPT
-================================================== -->
+            }
 
-<script src="script.js"></script>
+            students.forEach(
+                (student, studentIndex) => {
+
+                    studentsList.appendChild(
+                        createStudentElement(
+                            student,
+                            studentIndex
+                        )
+                    );
+
+                }
+            );
+
+            updateCalculatedValues();
+
+        }
+
+
+        function createStudentElement(
+            student,
+            studentIndex
+        ) {
+
+            const card =
+                document.createElement("article");
+
+            card.className =
+                "student-card";
+
+            const average =
+                calculateStudentAverage(student);
+
+            card.innerHTML = `
+
+                <div class="student-header">
+
+                    <div class="student-name-wrapper">
+
+                        <div class="student-number">
+                            ${studentIndex + 1}
+                        </div>
+
+                        <input
+                            class="student-name"
+                            type="text"
+                            value="${escapeHtml(student.name)}"
+                            placeholder="Nom de l'élève"
+                            data-student-name="${student.id}"
+                            aria-label="Nom de l'élève"
+                        >
+
+                    </div>
+
+                    <div class="student-average">
+
+                        <div class="student-average-label">
+                            Moyenne
+                        </div>
+
+                        <div
+                            class="student-average-value"
+                            data-student-average="${student.id}"
+                        >
+                            ${formatAverage(average)}
+                        </div>
+
+                    </div>
+
+                    <button
+                        class="delete-student"
+                        type="button"
+                        data-delete-student="${student.id}"
+                        aria-label="Supprimer l'élève"
+                    >
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+
+                </div>
+
+                <div class="grades-wrapper">
+
+                    <div class="grades-title">
+
+                        <span>
+                            Notes
+                        </span>
+
+                        <button
+                            class="add-grade-button"
+                            type="button"
+                            data-add-grade="${student.id}"
+                        >
+                            <i class="fa-solid fa-plus"></i>
+                            Ajouter une note
+                        </button>
+
+                    </div>
+
+                    <div class="grades-list">
+
+                        ${student.grades.map(
+                            grade =>
+                                createGradeHtml(
+                                    student,
+                                    grade
+                                )
+                        ).join("")}
+
+                    </div>
+
+                </div>
+
+            `;
+
+            return card;
+
+        }
+
+
+        function createGradeHtml(
+            student,
+            grade
+        ) {
+
+            const value =
+                grade.value === null ||
+                grade.value === undefined
+                    ? ""
+                    : grade.value;
+
+            const coefficient =
+                grade.coefficient || 1;
+
+            return `
+
+                <div
+                    class="grade-row"
+                    data-grade-row="${grade.id}"
+                >
+
+                    <input
+                        class="grade-input"
+                        type="text"
+                        inputmode="decimal"
+                        value="${escapeHtml(String(value))}"
+                        placeholder="Note /20"
+                        data-grade-value="${student.id}|${grade.id}"
+                        aria-label="Note"
+                    >
+
+                    <input
+                        class="coefficient-input"
+                        type="text"
+                        inputmode="decimal"
+                        value="${escapeHtml(String(coefficient))}"
+                        placeholder="Coefficient"
+                        data-grade-coefficient="${student.id}|${grade.id}"
+                        aria-label="Coefficient"
+                    >
+
+                    <input
+                        class="grade-input"
+                        type="text"
+                        value="${escapeHtml(grade.name || "")}"
+                        placeholder="Nom de l'évaluation"
+                        data-grade-name="${student.id}|${grade.id}"
+                        aria-label="Nom de l'évaluation"
+                    >
+
+                    <button
+                        class="grade-delete"
+                        type="button"
+                        data-delete-grade="${student.id}|${grade.id}"
+                        aria-label="Supprimer la note"
+                    >
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+
+                    <div
+                        class="grade-error"
+                        data-grade-error="${student.id}|${grade.id}"
+                    >
+                        La note doit être comprise entre 0 et 20.
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+
+
+        /* =====================================================
+           ÉCHAPPEMENT HTML
+        ====================================================== */
+
+        function escapeHtml(value) {
+
+            return String(value)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+
+        }
+
+
+        /* =====================================================
+           CALCULS VISUELS
+        ====================================================== */
+
+        function updateCalculatedValues() {
+
+            studentCount.textContent =
+                students.length;
+
+            const totalGrades =
+                students.reduce(
+                    (total, student) =>
+                        total + student.grades.length,
+                    0
+                );
+
+            gradeCount.textContent =
+                totalGrades;
+
+            const average =
+                calculateClassAverage();
+
+            classAverage.textContent =
+                formatAverage(average);
+
+            students.forEach(student => {
+
+                const element =
+                    document.querySelector(
+                        `[data-student-average="${student.id}"]`
+                    );
+
+                if (element) {
+
+                    element.textContent =
+                        formatAverage(
+                            calculateStudentAverage(student)
+                        );
+
+                }
+
+            });
+
+        }
+
+
+        /* =====================================================
+           ÉVÉNEMENTS DÉLÉGUÉS
+        ====================================================== */
+
+        studentsList.addEventListener(
+            "input",
+            event => {
+
+                const target =
+                    event.target;
+
+                if (
+                    target.matches(
+                        "[data-student-name]"
+                    )
+                ) {
+
+                    updateStudentName(
+                        target.dataset.studentName,
+                        target.value
+                    );
+
+                    return;
+
+                }
+
+
+                if (
+                    target.matches(
+                        "[data-grade-value]"
+                    )
+                ) {
+
+                    const [
+                        studentId,
+                        gradeId
+                    ] =
+                        target.dataset.gradeValue.split("|");
+
+                    const value =
+                        target.value;
+
+                    const numeric =
+                        Number(
+                            value.replace(",", ".")
+                        );
+
+                    const error =
+                        document.querySelector(
+                            `[data-grade-error="${studentId}|${gradeId}"]`
+                        );
+
+                    if (
+                        value !== "" &&
+                        (
+                            !Number.isFinite(numeric) ||
+                            numeric < 0 ||
+                            numeric > 20
+                        )
+                    ) {
+
+                        if (error) {
+                            error.classList.add("visible");
+                        }
+
+                    } else {
+
+                        if (error) {
+                            error.classList.remove("visible");
+                        }
+
+                    }
+
+                    updateGradeValue(
+                        studentId,
+                        gradeId,
+                        value
+                    );
+
+                    return;
+
+                }
+
+
+                if (
+                    target.matches(
+                        "[data-grade-coefficient]"
+                    )
+                ) {
+
+                    const [
+                        studentId,
+                        gradeId
+                    ] =
+                        target.dataset.gradeCoefficient.split("|");
+
+                    updateGradeCoefficient(
+                        studentId,
+                        gradeId,
+                        target.value
+                    );
+
+                    return;
+
+                }
+
+
+                if (
+                    target.matches(
+                        "[data-grade-name]"
+                    )
+                ) {
+
+                    const [
+                        studentId,
+                        gradeId
+                    ] =
+                        target.dataset.gradeName.split("|");
+
+                    const student =
+                        students.find(
+                            item =>
+                                item.id === studentId
+                        );
+
+                    if (!student) {
+                        return;
+                    }
+
+                    const grade =
+                        student.grades.find(
+                            item =>
+                                item.id === gradeId
+                        );
+
+                    if (!grade) {
+                        return;
+                    }
+
+                    grade.name =
+                        target.value;
+
+                    saveData();
+
+                }
+
+            }
+        );
+
+
+        studentsList.addEventListener(
+            "click",
+            event => {
+
+                const deleteStudentButton =
+                    event.target.closest(
+                        "[data-delete-student]"
+                    );
+
+                if (deleteStudentButton) {
+
+                    deleteStudent(
+                        deleteStudentButton.dataset.deleteStudent
+                    );
+
+                    return;
+
+                }
+
+
+                const addGradeButton =
+                    event.target.closest(
+                        "[data-add-grade]"
+                    );
+
+                if (addGradeButton) {
+
+                    addGrade(
+                        addGradeButton.dataset.addGrade
+                    );
+
+                    return;
+
+                }
+
+
+                const deleteGradeButton =
+                    event.target.closest(
+                        "[data-delete-grade]"
+                    );
+
+                if (deleteGradeButton) {
+
+                    const [
+                        studentId,
+                        gradeId
+                    ] =
+                        deleteGradeButton
+                            .dataset
+                            .deleteGrade
+                            .split("|");
+
+                    deleteGrade(
+                        studentId,
+                        gradeId
+                    );
+
+                }
+
+            }
+        );
+
+
+        /* =====================================================
+           BOUTONS
+        ====================================================== */
+
+        addStudentButton.addEventListener(
+            "click",
+            addStudent
+        );
+
+        emptyAddStudentButton.addEventListener(
+            "click",
+            addStudent
+        );
+
+        addGradeToAllButton.addEventListener(
+            "click",
+            addGradeToAll
+        );
+
+        printButton.addEventListener(
+            "click",
+            () => {
+                window.print();
+            }
+        );
+
+
+        resetButton.addEventListener(
+            "click",
+            () => {
+
+                const confirmed =
+                    confirm(
+                        "Voulez-vous vraiment supprimer tous les élèves et toutes leurs notes ?"
+                    );
+
+                if (!confirmed) {
+                    return;
+                }
+
+                students = [];
+
+                saveData();
+
+                render();
+
+            }
+        );
+
+
+        /* =====================================================
+           THÈME
+        ====================================================== */
+
+        const themeToggle =
+            document.getElementById(
+                "themeToggle"
+            );
+
+        function updateThemeIcon() {
+
+            if (!themeToggle) {
+                return;
+            }
+
+            const icon =
+                themeToggle.querySelector("i");
+
+            if (!icon) {
+                return;
+            }
+
+            if (
+                document.body.classList.contains(
+                    "light-mode"
+                )
+            ) {
+
+                icon.className =
+                    "fa-solid fa-sun";
+
+            } else {
+
+                icon.className =
+                    "fa-solid fa-moon";
+
+            }
+
+        }
+
+
+        function loadTheme() {
+
+            const savedTheme =
+                localStorage.getItem(
+                    "profbox_theme"
+                );
+
+            if (savedTheme === "light") {
+
+                document.body.classList.add(
+                    "light-mode"
+                );
+
+            }
+
+            updateThemeIcon();
+
+        }
+
+
+        if (themeToggle) {
+
+            themeToggle.addEventListener(
+                "click",
+                () => {
+
+                    document.body.classList.toggle(
+                        "light-mode"
+                    );
+
+                    const isLight =
+                        document.body.classList.contains(
+                            "light-mode"
+                        );
+
+                    localStorage.setItem(
+                        "profbox_theme",
+                        isLight
+                            ? "light"
+                            : "dark"
+                    );
+
+                    updateThemeIcon();
+
+                }
+            );
+
+        }
+
+
+        /* =====================================================
+           MENU MOBILE
+        ====================================================== */
+
+        const mobileMenuButton =
+            document.getElementById(
+                "mobileMenuButton"
+            );
+
+        const mobileMenu =
+            document.getElementById(
+                "mobileMenu"
+            );
+
+
+        if (
+            mobileMenuButton &&
+            mobileMenu
+        ) {
+
+            mobileMenuButton.addEventListener(
+                "click",
+                () => {
+
+                    mobileMenu.classList.toggle(
+                        "active"
+                    );
+
+                    const icon =
+                        mobileMenuButton.querySelector(
+                            "i"
+                        );
+
+                    if (
+                        mobileMenu.classList.contains(
+                            "active"
+                        )
+                    ) {
+
+                        icon.className =
+                            "fa-solid fa-xmark";
+
+                    } else {
+
+                        icon.className =
+                            "fa-solid fa-bars";
+
+                    }
+
+                }
+            );
+
+        }
+
+
+        /* =====================================================
+           RACCOURCIS
+        ====================================================== */
+
+        document.addEventListener(
+            "keydown",
+            event => {
+
+                if (
+                    event.ctrlKey &&
+                    event.key.toLowerCase() === "s"
+                ) {
+
+                    event.preventDefault();
+
+                    saveData();
+
+                }
+
+            }
+        );
+
+
+        /* =====================================================
+           INITIALISATION
+        ====================================================== */
+
+        loadTheme();
+
+        loadData();
+
+        render();
+
+    </script>
 
 </body>
-
 </html>
