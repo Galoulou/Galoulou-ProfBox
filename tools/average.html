@@ -1,0 +1,1866 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Calculateur de moyennes — Galoulou ProfBox</title>
+
+    <meta
+        name="description"
+        content="Calculez facilement les moyennes de vos élèves avec Galoulou ProfBox."
+    >
+
+    <!-- Le fichier est dans /tools/, donc ../ permet de revenir à la racine -->
+    <link rel="stylesheet" href="../style.css">
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+</head>
+
+<body>
+
+    <!-- =========================================================
+         NAVBAR
+    ========================================================== -->
+
+    <header class="navbar">
+
+        <div class="container navbar-inner">
+
+            <a href="../index.html" class="logo">
+                <span class="logo-icon">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </span>
+
+                <span>
+                    Galoulou <strong>ProfBox</strong>
+                </span>
+            </a>
+
+            <nav class="nav-links">
+
+                <a href="../index.html">
+                    Accueil
+                </a>
+
+                <a href="../index.html#tools">
+                    Outils
+                </a>
+
+                <a href="../index.html#categories">
+                    Catégories
+                </a>
+
+                <a href="../index.html#about">
+                    À propos
+                </a>
+
+            </nav>
+
+            <div class="nav-actions">
+
+                <a href="../index.html#tools" class="nav-button">
+                    <i class="fa-solid fa-toolbox"></i>
+                    Mes outils
+                </a>
+
+                <button
+                    id="themeToggle"
+                    class="theme-toggle"
+                    type="button"
+                    aria-label="Changer de thème"
+                >
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+
+                <button
+                    id="mobileMenuButton"
+                    class="mobile-menu-button"
+                    type="button"
+                    aria-label="Ouvrir le menu"
+                >
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+            </div>
+
+        </div>
+
+        <div id="mobileMenu" class="mobile-menu">
+
+            <a href="../index.html">
+                Accueil
+            </a>
+
+            <a href="../index.html#tools">
+                Outils
+            </a>
+
+            <a href="../index.html#categories">
+                Catégories
+            </a>
+
+            <a href="../index.html#about">
+                À propos
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================================================
+         CONTENU
+    ========================================================== -->
+
+    <main class="tool-page">
+
+        <div class="container">
+
+
+            <!-- Retour -->
+
+            <div class="tool-page-top">
+
+                <a
+                    href="../index.html#tools"
+                    class="back-link"
+                >
+                    <i class="fa-solid fa-arrow-left"></i>
+
+                    Retour aux outils
+                </a>
+
+                <span class="tool-breadcrumb">
+                    <i class="fa-solid fa-calculator"></i>
+
+                    Pédagogie
+                </span>
+
+            </div>
+
+
+            <!-- =================================================
+                 HERO DE L'OUTIL
+            ================================================== -->
+
+            <section class="tool-hero">
+
+                <div class="tool-hero-content">
+
+                    <div class="tool-badge">
+                        <i class="fa-solid fa-calculator"></i>
+
+                        Outil pédagogique
+                    </div>
+
+                    <h1>
+                        Calculateur de moyennes
+                    </h1>
+
+                    <p>
+                        Calculez rapidement les moyennes de vos élèves,
+                        avec notes et coefficients.
+                        Toutes vos données restent directement dans votre navigateur.
+                    </p>
+
+                </div>
+
+                <div class="tool-hero-icon">
+
+                    <i class="fa-solid fa-calculator"></i>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 BARRE D'ACTIONS
+            ================================================== -->
+
+            <section class="tool-toolbar">
+
+                <div class="toolbar-left">
+
+                    <button
+                        id="addStudentBtn"
+                        class="btn btn-primary"
+                        type="button"
+                    >
+                        <i class="fa-solid fa-user-plus"></i>
+
+                        Ajouter un élève
+                    </button>
+
+
+                    <button
+                        id="addGradeAllBtn"
+                        class="btn btn-secondary"
+                        type="button"
+                    >
+                        <i class="fa-solid fa-plus"></i>
+
+                        Ajouter une note à tous
+                    </button>
+
+                </div>
+
+
+                <div class="toolbar-right">
+
+                    <button
+                        id="printBtn"
+                        class="btn btn-secondary"
+                        type="button"
+                    >
+                        <i class="fa-solid fa-print"></i>
+
+                        Imprimer
+                    </button>
+
+
+                    <button
+                        id="resetBtn"
+                        class="btn btn-danger"
+                        type="button"
+                    >
+                        <i class="fa-solid fa-rotate-left"></i>
+
+                        Réinitialiser
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 STATISTIQUES
+            ================================================== -->
+
+            <section class="stats-grid">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+
+                    <div class="stat-content">
+
+                        <span>
+                            Élèves
+                        </span>
+
+                        <strong id="studentCount">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </div>
+
+                    <div class="stat-content">
+
+                        <span>
+                            Notes saisies
+                        </span>
+
+                        <strong id="gradeCount">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card stat-card-highlight">
+
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+
+                    <div class="stat-content">
+
+                        <span>
+                            Moyenne de la classe
+                        </span>
+
+                        <strong id="classAverage">
+                            —
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 ÉLÈVES
+            ================================================== -->
+
+            <section class="students-section">
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <span class="section-eyebrow">
+                            MA CLASSE
+                        </span>
+
+                        <h2>
+                            Mes élèves
+                        </h2>
+
+                        <p>
+                            Ajoutez vos élèves puis renseignez leurs évaluations.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Les cartes élèves seront générées ici -->
+
+                <div
+                    id="studentsGrid"
+                    class="students-grid"
+                ></div>
+
+
+                <!-- État vide -->
+
+                <div
+                    id="emptyState"
+                    class="empty-state"
+                >
+
+                    <div class="empty-icon">
+
+                        <i class="fa-solid fa-calculator"></i>
+
+                    </div>
+
+                    <h3>
+                        Aucun élève pour le moment
+                    </h3>
+
+                    <p>
+                        Commencez par ajouter un élève,
+                        puis ajoutez ses notes et leurs coefficients.
+                    </p>
+
+                    <button
+                        id="emptyAddStudentBtn"
+                        class="btn btn-primary"
+                        type="button"
+                    >
+                        <i class="fa-solid fa-user-plus"></i>
+
+                        Ajouter mon premier élève
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 ASTUCE
+            ================================================== -->
+
+            <aside class="info-card">
+
+                <div class="info-icon">
+
+                    <i class="fa-solid fa-lightbulb"></i>
+
+                </div>
+
+                <div>
+
+                    <strong>
+                        Astuce
+                    </strong>
+
+                    <p>
+                        Une note doit être comprise entre 0 et 20.
+                        Si aucun coefficient n'est indiqué,
+                        le coefficient 1 est utilisé.
+                        Les données sont conservées uniquement dans votre navigateur.
+                    </p>
+
+                </div>
+
+            </aside>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================================================
+         MODALE : AJOUTER UN ÉLÈVE
+    ========================================================== -->
+
+    <div
+        id="studentModal"
+        class="modal-overlay"
+        aria-hidden="true"
+    >
+
+        <div
+            class="modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="studentModalTitle"
+        >
+
+            <button
+                id="closeStudentModal"
+                class="modal-close"
+                type="button"
+                aria-label="Fermer"
+            >
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+
+            <div class="modal-icon">
+
+                <i class="fa-solid fa-user-plus"></i>
+
+            </div>
+
+
+            <h2 id="studentModalTitle">
+                Ajouter un élève
+            </h2>
+
+            <p>
+                Entrez le nom ou le prénom de l'élève.
+            </p>
+
+
+            <form id="studentForm">
+
+                <label for="studentName">
+                    Nom de l'élève
+                </label>
+
+                <input
+                    id="studentName"
+                    type="text"
+                    maxlength="80"
+                    placeholder="Ex. Emma Dupont"
+                    autocomplete="off"
+                    required
+                >
+
+
+                <div class="modal-actions">
+
+                    <button
+                        id="cancelStudentBtn"
+                        class="btn btn-secondary"
+                        type="button"
+                    >
+                        Annuler
+                    </button>
+
+                    <button
+                        class="btn btn-primary"
+                        type="submit"
+                    >
+                        <i class="fa-solid fa-plus"></i>
+
+                        Ajouter
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         MODALE : AJOUTER UNE NOTE
+    ========================================================== -->
+
+    <div
+        id="gradeModal"
+        class="modal-overlay"
+        aria-hidden="true"
+    >
+
+        <div
+            class="modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="gradeModalTitle"
+        >
+
+            <button
+                id="closeGradeModal"
+                class="modal-close"
+                type="button"
+                aria-label="Fermer"
+            >
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+
+            <div class="modal-icon">
+
+                <i class="fa-solid fa-pen-to-square"></i>
+
+            </div>
+
+
+            <h2 id="gradeModalTitle">
+                Ajouter une note
+            </h2>
+
+            <p id="gradeModalDescription">
+                Ajoutez une évaluation à cet élève.
+            </p>
+
+
+            <form id="gradeForm">
+
+                <div class="form-grid">
+
+                    <div>
+
+                        <label for="gradeValue">
+                            Note /20
+                        </label>
+
+                        <input
+                            id="gradeValue"
+                            type="number"
+                            min="0"
+                            max="20"
+                            step="0.25"
+                            placeholder="15"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div>
+
+                        <label for="gradeCoefficient">
+                            Coefficient
+                        </label>
+
+                        <input
+                            id="gradeCoefficient"
+                            type="number"
+                            min="0.01"
+                            step="0.5"
+                            value="1"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <label for="gradeName">
+                    Nom de l'évaluation
+                </label>
+
+                <input
+                    id="gradeName"
+                    type="text"
+                    maxlength="80"
+                    placeholder="Ex. Contrôle de maths"
+                    autocomplete="off"
+                >
+
+
+                <div class="modal-actions">
+
+                    <button
+                        id="cancelGradeBtn"
+                        class="btn btn-secondary"
+                        type="button"
+                    >
+                        Annuler
+                    </button>
+
+                    <button
+                        class="btn btn-primary"
+                        type="submit"
+                    >
+                        <i class="fa-solid fa-plus"></i>
+
+                        Ajouter la note
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         MODALE : NOTE À TOUS
+    ========================================================== -->
+
+    <div
+        id="allGradeModal"
+        class="modal-overlay"
+        aria-hidden="true"
+    >
+
+        <div
+            class="modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="allGradeModalTitle"
+        >
+
+            <button
+                id="closeAllGradeModal"
+                class="modal-close"
+                type="button"
+                aria-label="Fermer"
+            >
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+
+            <div class="modal-icon">
+
+                <i class="fa-solid fa-users"></i>
+
+            </div>
+
+
+            <h2 id="allGradeModalTitle">
+                Ajouter une note à tous
+            </h2>
+
+            <p>
+                La même évaluation sera ajoutée à tous les élèves.
+            </p>
+
+
+            <form id="allGradeForm">
+
+                <div class="form-grid">
+
+                    <div>
+
+                        <label for="allGradeValue">
+                            Note /20
+                        </label>
+
+                        <input
+                            id="allGradeValue"
+                            type="number"
+                            min="0"
+                            max="20"
+                            step="0.25"
+                            placeholder="15"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div>
+
+                        <label for="allGradeCoefficient">
+                            Coefficient
+                        </label>
+
+                        <input
+                            id="allGradeCoefficient"
+                            type="number"
+                            min="0.01"
+                            step="0.5"
+                            value="1"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <label for="allGradeName">
+                    Nom de l'évaluation
+                </label>
+
+                <input
+                    id="allGradeName"
+                    type="text"
+                    maxlength="80"
+                    placeholder="Ex. Devoir maison"
+                    autocomplete="off"
+                    required
+                >
+
+
+                <div class="modal-actions">
+
+                    <button
+                        id="cancelAllGradeBtn"
+                        class="btn btn-secondary"
+                        type="button"
+                    >
+                        Annuler
+                    </button>
+
+                    <button
+                        class="btn btn-primary"
+                        type="submit"
+                    >
+                        <i class="fa-solid fa-check"></i>
+
+                        Ajouter à tous
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         SCRIPT DE LA PAGE
+    ========================================================== -->
+
+    <script>
+
+        const STORAGE_KEY = "profbox_average_students";
+
+        let students = [];
+
+        let selectedStudentId = null;
+
+
+        /* =====================================================
+           OUTILS
+        ====================================================== */
+
+        function $(id) {
+            return document.getElementById(id);
+        }
+
+
+        function generateId() {
+
+            return Date.now().toString(36)
+                + Math.random().toString(36).substring(2);
+
+        }
+
+
+        function escapeHTML(value) {
+
+            return String(value)
+                .replaceAll("&", "&amp;")
+                .replaceAll("<", "&lt;")
+                .replaceAll(">", "&gt;")
+                .replaceAll('"', "&quot;")
+                .replaceAll("'", "&#039;");
+
+        }
+
+
+        /* =====================================================
+           SAUVEGARDE
+        ====================================================== */
+
+        function saveStudents() {
+
+            localStorage.setItem(
+                STORAGE_KEY,
+                JSON.stringify(students)
+            );
+
+        }
+
+
+        function loadStudents() {
+
+            try {
+
+                const saved = localStorage.getItem(STORAGE_KEY);
+
+                if (!saved) {
+
+                    students = [];
+
+                    return;
+
+                }
+
+                const parsed = JSON.parse(saved);
+
+                students = Array.isArray(parsed)
+                    ? parsed
+                    : [];
+
+            } catch {
+
+                students = [];
+
+            }
+
+        }
+
+
+        /* =====================================================
+           CALCULS
+        ====================================================== */
+
+        function calculateAverage(grades) {
+
+            if (!grades || grades.length === 0) {
+
+                return null;
+
+            }
+
+            let total = 0;
+
+            let totalCoefficient = 0;
+
+
+            grades.forEach(grade => {
+
+                const value = Number(grade.value);
+
+                const coefficient = Number(grade.coefficient);
+
+
+                total += value * coefficient;
+
+                totalCoefficient += coefficient;
+
+            });
+
+
+            if (totalCoefficient === 0) {
+
+                return null;
+
+            }
+
+
+            return total / totalCoefficient;
+
+        }
+
+
+        function formatAverage(value) {
+
+            if (
+                value === null ||
+                value === undefined ||
+                Number.isNaN(value)
+            ) {
+
+                return "—";
+
+            }
+
+
+            return value
+                .toFixed(2)
+                .replace(".", ",");
+
+        }
+
+
+        function getTotalGrades() {
+
+            return students.reduce(
+                (total, student) => total + student.grades.length,
+                0
+            );
+
+        }
+
+
+        function getClassAverage() {
+
+            const averages = students
+                .map(student => calculateAverage(student.grades))
+                .filter(value => value !== null);
+
+
+            if (averages.length === 0) {
+
+                return null;
+
+            }
+
+
+            return averages.reduce(
+                (total, value) => total + value,
+                0
+            ) / averages.length;
+
+        }
+
+
+        /* =====================================================
+           AFFICHAGE
+        ====================================================== */
+
+        function render() {
+
+            const grid = $("studentsGrid");
+
+            const emptyState = $("emptyState");
+
+
+            $("studentCount").textContent =
+                students.length;
+
+
+            $("gradeCount").textContent =
+                getTotalGrades();
+
+
+            $("classAverage").textContent =
+                formatAverage(getClassAverage());
+
+
+            grid.innerHTML = "";
+
+
+            if (students.length === 0) {
+
+                emptyState.style.display = "flex";
+
+                return;
+
+            }
+
+
+            emptyState.style.display = "none";
+
+
+            students.forEach(student => {
+
+                const card = document.createElement("article");
+
+                card.className = "student-card";
+
+
+                const average =
+                    calculateAverage(student.grades);
+
+
+                const initial =
+                    student.name
+                        .trim()
+                        .charAt(0)
+                        .toUpperCase();
+
+
+                card.innerHTML = `
+
+                    <div class="student-card-header">
+
+                        <div class="student-avatar">
+                            ${escapeHTML(initial)}
+                        </div>
+
+
+                        <div class="student-name-wrap">
+
+                            <h3>
+                                ${escapeHTML(student.name)}
+                            </h3>
+
+                            <span>
+                                ${student.grades.length}
+                                note${student.grades.length > 1 ? "s" : ""}
+                            </span>
+
+                        </div>
+
+
+                        <button
+                            class="icon-button delete-student"
+                            type="button"
+                            title="Supprimer l'élève"
+                        >
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+
+                    </div>
+
+
+                    <div class="student-average">
+
+                        <span>
+                            Moyenne
+                        </span>
+
+                        <strong>
+                            ${formatAverage(average)}
+
+                            ${
+                                average !== null
+                                ? "<small> / 20</small>"
+                                : ""
+                            }
+                        </strong>
+
+                    </div>
+
+
+                    <div class="grades-list">
+
+                        ${
+                            student.grades.length === 0
+
+                            ?
+
+                            `
+                                <div class="no-grades">
+
+                                    <i class="fa-regular fa-note-sticky"></i>
+
+                                    Aucune note
+
+                                </div>
+                            `
+
+                            :
+
+                            student.grades.map(grade => `
+
+                                <div class="grade-row">
+
+                                    <div class="grade-info">
+
+                                        <strong>
+                                            ${escapeHTML(grade.name)}
+                                        </strong>
+
+                                        <span>
+                                            Coef. ${grade.coefficient}
+                                        </span>
+
+                                    </div>
+
+
+                                    <div class="grade-value">
+
+                                        ${String(grade.value).replace(".", ",")}
+                                        / 20
+
+                                    </div>
+
+
+                                    <button
+                                        class="icon-button delete-grade"
+                                        type="button"
+                                        data-grade-id="${grade.id}"
+                                        title="Supprimer la note"
+                                    >
+                                        <i class="fa-solid fa-xmark"></i>
+                                    </button>
+
+                                </div>
+
+                            `).join("")
+
+                        }
+
+                    </div>
+
+
+                    <button
+                        class="btn btn-secondary add-grade-button"
+                        type="button"
+                    >
+
+                        <i class="fa-solid fa-plus"></i>
+
+                        Ajouter une note
+
+                    </button>
+
+                `;
+
+
+                /* Supprimer élève */
+
+                card
+                    .querySelector(".delete-student")
+                    .addEventListener("click", () => {
+
+                        const confirmed = confirm(
+                            `Supprimer ${student.name} et toutes ses notes ?`
+                        );
+
+
+                        if (!confirmed) {
+
+                            return;
+
+                        }
+
+
+                        students = students.filter(
+                            item => item.id !== student.id
+                        );
+
+
+                        saveStudents();
+
+                        render();
+
+                    });
+
+
+                /* Ajouter note */
+
+                card
+                    .querySelector(".add-grade-button")
+                    .addEventListener("click", () => {
+
+                        openGradeModal(student.id);
+
+                    });
+
+
+                /* Supprimer note */
+
+                card
+                    .querySelectorAll(".delete-grade")
+                    .forEach(button => {
+
+                        button.addEventListener(
+                            "click",
+                            () => {
+
+                                const gradeId =
+                                    button.dataset.gradeId;
+
+
+                                student.grades =
+                                    student.grades.filter(
+                                        grade => grade.id !== gradeId
+                                    );
+
+
+                                saveStudents();
+
+                                render();
+
+                            }
+                        );
+
+                    });
+
+
+                grid.appendChild(card);
+
+            });
+
+        }
+
+
+        /* =====================================================
+           MODALES
+        ====================================================== */
+
+        function openModal(modal) {
+
+            modal.classList.add("active");
+
+            modal.setAttribute(
+                "aria-hidden",
+                "false"
+            );
+
+            document.body.classList.add(
+                "modal-open"
+            );
+
+        }
+
+
+        function closeModal(modal) {
+
+            modal.classList.remove("active");
+
+            modal.setAttribute(
+                "aria-hidden",
+                "true"
+            );
+
+
+            const anyOpen =
+                document.querySelector(
+                    ".modal-overlay.active"
+                );
+
+
+            if (!anyOpen) {
+
+                document.body.classList.remove(
+                    "modal-open"
+                );
+
+            }
+
+        }
+
+
+        function openStudentModal() {
+
+            $("studentForm").reset();
+
+            openModal($("studentModal"));
+
+
+            setTimeout(() => {
+
+                $("studentName").focus();
+
+            }, 100);
+
+        }
+
+
+        function openGradeModal(studentId) {
+
+            selectedStudentId = studentId;
+
+
+            const student =
+                students.find(
+                    item => item.id === studentId
+                );
+
+
+            if (!student) {
+
+                return;
+
+            }
+
+
+            $("gradeForm").reset();
+
+            $("gradeCoefficient").value = "1";
+
+
+            $("gradeModalDescription").textContent =
+                `Ajoutez une évaluation à ${student.name}.`;
+
+
+            openModal($("gradeModal"));
+
+
+            setTimeout(() => {
+
+                $("gradeValue").focus();
+
+            }, 100);
+
+        }
+
+
+        /* =====================================================
+           AJOUT ÉLÈVE
+        ====================================================== */
+
+        $("addStudentBtn")
+            .addEventListener(
+                "click",
+                openStudentModal
+            );
+
+
+        $("emptyAddStudentBtn")
+            .addEventListener(
+                "click",
+                openStudentModal
+            );
+
+
+        $("studentForm")
+            .addEventListener(
+                "submit",
+                event => {
+
+                    event.preventDefault();
+
+
+                    const name =
+                        $("studentName")
+                            .value
+                            .trim();
+
+
+                    if (!name) {
+
+                        return;
+
+                    }
+
+
+                    students.push({
+
+                        id: generateId(),
+
+                        name: name,
+
+                        grades: []
+
+                    });
+
+
+                    saveStudents();
+
+                    render();
+
+                    closeModal(
+                        $("studentModal")
+                    );
+
+                }
+            );
+
+
+        /* =====================================================
+           AJOUT NOTE
+        ====================================================== */
+
+        $("gradeForm")
+            .addEventListener(
+                "submit",
+                event => {
+
+                    event.preventDefault();
+
+
+                    const student =
+                        students.find(
+                            item =>
+                                item.id ===
+                                selectedStudentId
+                        );
+
+
+                    if (!student) {
+
+                        return;
+
+                    }
+
+
+                    const value =
+                        Number(
+                            $("gradeValue").value
+                        );
+
+
+                    const coefficient =
+                        Number(
+                            $("gradeCoefficient").value
+                        );
+
+
+                    const name =
+                        $("gradeName")
+                            .value
+                            .trim() ||
+                        "Évaluation";
+
+
+                    if (
+                        Number.isNaN(value) ||
+                        value < 0 ||
+                        value > 20
+                    ) {
+
+                        alert(
+                            "La note doit être comprise entre 0 et 20."
+                        );
+
+                        return;
+
+                    }
+
+
+                    if (
+                        Number.isNaN(coefficient) ||
+                        coefficient <= 0
+                    ) {
+
+                        alert(
+                            "Le coefficient doit être supérieur à 0."
+                        );
+
+                        return;
+
+                    }
+
+
+                    student.grades.push({
+
+                        id: generateId(),
+
+                        value: value,
+
+                        coefficient: coefficient,
+
+                        name: name
+
+                    });
+
+
+                    saveStudents();
+
+                    render();
+
+                    closeModal(
+                        $("gradeModal")
+                    );
+
+                }
+            );
+
+
+        /* =====================================================
+           NOTE À TOUS
+        ====================================================== */
+
+        $("addGradeAllBtn")
+            .addEventListener(
+                "click",
+                () => {
+
+                    if (students.length === 0) {
+
+                        alert(
+                            "Ajoutez d'abord au moins un élève."
+                        );
+
+                        return;
+
+                    }
+
+
+                    $("allGradeForm").reset();
+
+                    $("allGradeCoefficient").value = "1";
+
+
+                    openModal(
+                        $("allGradeModal")
+                    );
+
+
+                    setTimeout(() => {
+
+                        $("allGradeValue").focus();
+
+                    }, 100);
+
+                }
+            );
+
+
+        $("allGradeForm")
+            .addEventListener(
+                "submit",
+                event => {
+
+                    event.preventDefault();
+
+
+                    const value =
+                        Number(
+                            $("allGradeValue").value
+                        );
+
+
+                    const coefficient =
+                        Number(
+                            $("allGradeCoefficient").value
+                        );
+
+
+                    const name =
+                        $("allGradeName")
+                            .value
+                            .trim();
+
+
+                    if (
+                        Number.isNaN(value) ||
+                        value < 0 ||
+                        value > 20
+                    ) {
+
+                        alert(
+                            "La note doit être comprise entre 0 et 20."
+                        );
+
+                        return;
+
+                    }
+
+
+                    if (
+                        Number.isNaN(coefficient) ||
+                        coefficient <= 0
+                    ) {
+
+                        alert(
+                            "Le coefficient doit être supérieur à 0."
+                        );
+
+                        return;
+
+                    }
+
+
+                    if (!name) {
+
+                        alert(
+                            "Donnez un nom à l'évaluation."
+                        );
+
+                        return;
+
+                    }
+
+
+                    students.forEach(student => {
+
+                        student.grades.push({
+
+                            id: generateId(),
+
+                            value: value,
+
+                            coefficient: coefficient,
+
+                            name: name
+
+                        });
+
+                    });
+
+
+                    saveStudents();
+
+                    render();
+
+                    closeModal(
+                        $("allGradeModal")
+                    );
+
+                }
+            );
+
+
+        /* =====================================================
+           FERMETURE DES MODALES
+        ====================================================== */
+
+        $("closeStudentModal")
+            .addEventListener(
+                "click",
+                () => closeModal($("studentModal"))
+            );
+
+
+        $("cancelStudentBtn")
+            .addEventListener(
+                "click",
+                () => closeModal($("studentModal"))
+            );
+
+
+        $("closeGradeModal")
+            .addEventListener(
+                "click",
+                () => closeModal($("gradeModal"))
+            );
+
+
+        $("cancelGradeBtn")
+            .addEventListener(
+                "click",
+                () => closeModal($("gradeModal"))
+            );
+
+
+        $("closeAllGradeModal")
+            .addEventListener(
+                "click",
+                () => closeModal($("allGradeModal"))
+            );
+
+
+        $("cancelAllGradeBtn")
+            .addEventListener(
+                "click",
+                () => closeModal($("allGradeModal"))
+            );
+
+
+        document
+            .querySelectorAll(".modal-overlay")
+            .forEach(overlay => {
+
+                overlay.addEventListener(
+                    "click",
+                    event => {
+
+                        if (
+                            event.target === overlay
+                        ) {
+
+                            closeModal(overlay);
+
+                        }
+
+                    }
+                );
+
+            });
+
+
+        document.addEventListener(
+            "keydown",
+            event => {
+
+                if (event.key === "Escape") {
+
+                    document
+                        .querySelectorAll(
+                            ".modal-overlay.active"
+                        )
+                        .forEach(modal => {
+
+                            closeModal(modal);
+
+                        });
+
+                }
+
+            }
+        );
+
+
+        /* =====================================================
+           IMPRESSION
+        ====================================================== */
+
+        $("printBtn")
+            .addEventListener(
+                "click",
+                () => {
+
+                    window.print();
+
+                }
+            );
+
+
+        /* =====================================================
+           RESET
+        ====================================================== */
+
+        $("resetBtn")
+            .addEventListener(
+                "click",
+                () => {
+
+                    if (students.length === 0) {
+
+                        return;
+
+                    }
+
+
+                    const confirmed = confirm(
+                        "Supprimer tous les élèves et toutes leurs notes ?"
+                    );
+
+
+                    if (!confirmed) {
+
+                        return;
+
+                    }
+
+
+                    students = [];
+
+
+                    localStorage.removeItem(
+                        STORAGE_KEY
+                    );
+
+
+                    render();
+
+                }
+            );
+
+
+        /* =====================================================
+           THÈME
+        ====================================================== */
+
+        function setTheme(theme) {
+
+            if (theme === "light") {
+
+                document.body.classList.add(
+                    "light-mode"
+                );
+
+
+                $("themeToggle").innerHTML =
+                    '<i class="fa-solid fa-sun"></i>';
+
+            } else {
+
+                document.body.classList.remove(
+                    "light-mode"
+                );
+
+
+                $("themeToggle").innerHTML =
+                    '<i class="fa-solid fa-moon"></i>';
+
+            }
+
+
+            localStorage.setItem(
+                "profbox_theme",
+                theme
+            );
+
+        }
+
+
+        const savedTheme =
+            localStorage.getItem(
+                "profbox_theme"
+            );
+
+
+        setTheme(
+            savedTheme || "dark"
+        );
+
+
+        $("themeToggle")
+            .addEventListener(
+                "click",
+                () => {
+
+                    const light =
+                        document.body.classList.contains(
+                            "light-mode"
+                        );
+
+
+                    setTheme(
+                        light
+                            ? "dark"
+                            : "light"
+                    );
+
+                }
+            );
+
+
+        /* =====================================================
+           MENU MOBILE
+        ====================================================== */
+
+        $("mobileMenuButton")
+            .addEventListener(
+                "click",
+                () => {
+
+                    const menu =
+                        $("mobileMenu");
+
+
+                    const opened =
+                        menu.classList.toggle(
+                            "active"
+                        );
+
+
+                    $("mobileMenuButton")
+                        .setAttribute(
+                            "aria-expanded",
+                            String(opened)
+                        );
+
+
+                    $("mobileMenuButton")
+                        .innerHTML =
+                        opened
+                            ? '<i class="fa-solid fa-xmark"></i>'
+                            : '<i class="fa-solid fa-bars"></i>';
+
+                }
+            );
+
+
+        /* =====================================================
+           INITIALISATION
+        ====================================================== */
+
+        loadStudents();
+
+        render();
+
+    </script>
+
+</body>
+</html>
